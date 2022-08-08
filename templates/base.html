@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> DRAGON IA | {% block 'titulo' %}{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=Open+Sans:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+</head>
+<body>
+    <input id="fechar-menu" class="fechar-menu" type="checkbox" role="button" aria-label="feichar menu">
+    <label for="fechar-menu" title="fechar-menu" class="fechar-menu-label"></label>
+    <aside class="menu">
+        <div class="conteudo-principal menu-conteudo">
+            <div class="menu-logo">
+                <img src="{% static '/img/dragon-icon.svg' %}" class="logo-dg">
+                <h1 onclick="getElementById('fechar-menu').checked = false;"><a href="{% url 'home' %}">DRAGON IA</a></h1>
+            </div>
+            <nav>
+                <ul>
+                    {% block 'nav-li'%}{% endblock%}
+                </ul>
+            </nav>
+        </div>
+    </aside>
+    <div class="espaco-menu"></div>
+
+    {% block 'conteudo' %}{% endblock %}
+</body>
