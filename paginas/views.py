@@ -1,7 +1,12 @@
 from django.shortcuts import render, redirect
-from django.contrib import messages
+from django.contrib import messages, auth
 from django.core.validators import validate_email
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
+
+
+def home(request):
+    pass
 
 
 def cadastro(request):
@@ -18,7 +23,7 @@ def cadastro(request):
 
     if not nome or not sobrenome or not email or not senha \
             or not senha2 or not chave:
-        messages.add_message(request, messages.ERROR, 'Nenhum campo pode estar vazio.')
+        messages.add_message(request, messages.WARNING, 'Nenhum campo pode estar vazio.')
         return render(request, 'paginas/cadastro.html')
 
     try:
@@ -28,7 +33,7 @@ def cadastro(request):
         return render(request, 'paginas/cadastro.html')
 
     if len(senha) < 8:
-        messages.add_message(request, messages.ERROR, 'a senha precisa ter 8 caracteres ou mais')
+        messages.add_message(request, messages.WARNING, 'a senha precisa ter 8 caracteres ou mais')
         return render(request, 'paginas/cadastro.html')
 
     if senha != senha2:
@@ -51,9 +56,24 @@ def cadastro(request):
     return redirect('entrar')
 
 
-def home(request):
-    pass
-
-
 def entrar(request):
-    return render(request, 'paginas/entrar.html')
+    if request.method != "POST":
+        return render(request, 'paginas/entrar.html')
+
+    usuario = request.POST.get('username')
+    senha = request.POST.get('senha')
+
+    user = auth.authenticate(request, username=usuario, password=senha)
+    if not user:
+        messages.add_message(request, messages.ERROR, 'Credenciais inválidas')
+        messages.add_message(request, messages.WARNING, 'Tanto o usuario como a senha diferencia letras minusculas de maiusculas')
+        return render(request, 'paginas/entrar.html')
+    else:
+        auth.login(request, user)
+        messages.add_message(request, messages.SUCCESS, f'Bem vindo! {usuario}')
+        return redirect('perfil')
+
+
+@login_required(redirect_field_name='login')
+def perfil(request):
+    return render(request, 'paginas/perfil.html')

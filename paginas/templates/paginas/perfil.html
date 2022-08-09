@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block 'titulo' %}Base titulo{% endblock %}
+{% block 'nav-li' %}
+    <li><a href="#">Download</a></li>
+    <li><a href="#">Sair</a></li>
+{% endblock%}
+
+{% block 'conteudo'%}
+    <h2>Sou o perfil</h2>
+    {% include 'parciais/_mensagens.html'%}
+{% endblock %}

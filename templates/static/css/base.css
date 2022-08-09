@@ -139,7 +139,7 @@ p {
 .mensagem p {
     margin: 0;
     text-align: center;
-    font-size: 1.4rem
+    font-size: 1.4rem;
     padding: 1rem;
 }
 
@@ -299,6 +299,100 @@ p {
     color: crimson;
 }
 
+
+/* entrar */
+
+.entrar div .logo-marcar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+}
+
+.container-img {
+    width: 10rem;
+    height: 10rerm;
+    background: crimson;
+    border: 0.5rem solid white;
+    border-radius: 1.5rem;
+}
+
+.container-img img {
+    padding: 1rem;
+    margin-top: 0.5rem;
+}
+.logo-marcar h2 {
+    margin: 0;
+}
+
+.form-login {
+    margin-top: 5rem;
+    max-width: 50%;
+    margin-left: 25%;
+}
+
+.form-login legend {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.form-login-inputs {
+    max-width: 50%;
+    margin-left: 25%;
+}
+
+.form-login-inputs label {
+    display: block;
+    font-size: 1.4rem;
+    margin-top: 3rem;
+    margin-bottom: 0.5rem;
+}
+
+.form-login-inputs input {
+    border: none;
+    background: #eee;
+    padding: 1rem 1rem;
+    border-radius: 15rem;
+    width: 100%;
+}
+
+.form-login-inputs input:focus {
+    box-shadow: 0 0 1.5rem crimson;
+}
+
+.form-login-button {
+    width: 20%;
+    margin-left: 40%;
+    margin-top: 3rem;
+}
+
+.form-login-button button {
+    width: 100%;
+    padding: 0.5rem 0.5rem;
+    border-radius: 1.5rem;
+    background: #1F6CAB;
+    color: white;
+}
+
+.form-login-button button:hover {
+    box-shadow: 0 0 1.5rem crimson;
+}
+
+.form-login p {
+    text-align: center;
+    font-size: 1.4rem;
+    margin: 0;
+    margin-top: 1rem;
+}
+
+.form-login p a {
+    color: #1F6CAB;
+}
+
+.form-login p a:hover {
+    color: crimson;
+}
+
 @media (max-width: 80rem) {
 
     .menu {
@@ -363,7 +457,23 @@ p {
         min-width: 80%;
     }
 
-    .cadastro .cadastro-conteudo h1 {
+    .cadastro .cadastro-conteudo h2 {
         text-align: center;
+        font-size: 5rem;
+    }
+
+    .entrar div .logo-marcar {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .form-login, .form-login-inputs {
+        margin: 0;
+        min-width: 100%;
+    }
+
+    .form-login-button {
+        margin-left: 25%;
+        min-width: 50%;
     }
 }

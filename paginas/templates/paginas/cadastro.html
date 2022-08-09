@@ -3,7 +3,7 @@
 
 {% block 'titulo' %}Base titulo{% endblock %}
 {% block 'nav-li' %}
-    <li><a href="#">Download</a></li>
+    <li><a href="{% url 'entrar' %}">Entrar</a></li>
     <li><a href="#">Sobre</a></li>
 {% endblock%}
 
@@ -69,12 +69,12 @@
                         </div>
                     </div>
                     <div>
-                        <p class="j-conta">Já tenho uma conta: <a href="#">Entrar</a></p>
+                        <p class="j-conta">Já tenho uma conta: <a href="{% url 'entrar' %}">Entrar</a></p>
                     </div>
 
                 </form>
 
             </div>
-        </div>'
+        </div>
     </section>
 {% endblock%}
