@@ -32,31 +32,35 @@
             </div>
             <div class="cadastro-formulario">
                 <form method="POST" action="{% url 'cadastro' %}">
-                    {% csrf_token %}
+                        {% csrf_token %}
                     <legend>Crie uma conta agora mesmo!<br>é rapido e fácil</legend>
                     {% include 'parciais/_mensagens.html' %}
                     <div class="grupo-formulario-nome">
                         <div class="grupo-formulario">
                             <label for="primeiro-nome">Nome</label>
-                            <input type="text" id="primeiro-nome" placeholder="Ex.: Maria">
+                            <input type="text" id="primeiro-nome" name="nome" value="{{request.POST.nome}}" placeholder="Ex.: Maria">
                         </div>
                         <div class="grupo-formulario">
                             <label for="segundo-nome">Sobrenome</label>
-                            <input type="text" id="segundo-nome" placeholder="Ex.: Luiza">
+                            <input type="text" id="segundo-nome" name="sobrenome" value="{{request.POST.sobrenome}}" placeholder="Ex.: Luiza">
                         </div>
                     </div>
                     <div class="grupo-formulario-login">
                         <div class="grupo-formulario">
                             <label for="email">E-mail</label>
-                            <input type="email" id="email" placeholder="Seu@email.com">
+                            <input type="email" id="email" name="email" value="{{request.POST.email}}" placeholder="Seu@email.com">
                         </div>
                         <div class="grupo-formulario">
                             <label for="senha">Senha</label>
-                            <input type="password" id="senha" placeholder="Digite sua senha">
+                            <input type="password" id="senha" name="senha" placeholder="Digite sua senha">
                         </div>
                         <div class="grupo-formulario">
                             <label for="conf-senha">Confirme sua senha</label>
-                            <input type="text" id="conf-senha" placeholder="Digite sua senha novamente">
+                            <input type="password" id="conf-senha" name="senha2" placeholder="Digite sua senha novamente">
+                        </div>
+                        <div class="grupo-formulario">
+                            <label for="chave">Chave</label>
+                            <input type="text" id="chave" name="chave" value="{{request.POST.chave}}" placeholder="Chave da licença">
                         </div>
                     </div>
                     <div class="grupo-formulario-botao">

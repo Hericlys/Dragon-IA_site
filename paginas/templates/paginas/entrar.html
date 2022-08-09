@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block 'titulo' %}Base titulo{% endblock %}
+{% block 'nav-li' %}
+    <li><a href="#">Download</a></li>
+    <li><a href="#">sobre</a></li>
+    <li><a href="#">Sair</a></li>
+{% endblock%}
+
+{% block 'conteudo'%}
+    {% include 'parciais/_mensagens.html'%}
+    <h2>Sou a entrar</h2>
+{% endblock %}
