@@ -1,0 +1,15 @@
+{% if messages %}
+    {% for mensagem in messages %}
+        {% if mensagem.tags == "info" %}
+            <div class=" mensagem {{ mensagem.tags }}">
+                <p> ops... sua licensa não é valida. <a href="#">clique aqui! para obter uma nova licensa.</a></p>
+            </div>
+        {% else %}
+            <div class=" mensagem {{ mensagem.tags }}">
+                <p>{{ mensagem }}</p>
+            </div>
+        {% endif %}
+    {% endfor %}
+{% endif %}
+
+

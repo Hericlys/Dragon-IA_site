@@ -128,7 +128,56 @@ p {
     top: -1rem;
 }
 
-/* CSS do Cadastro */
+/* mensagens */
+
+.mensagem {
+    min-width: 100%;
+    height: auto;
+    border-radius: 1.5rem;
+}
+
+.mensagem p {
+    margin: 0;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 1.4rem
+}
+
+.mensagem a {
+    color: black;
+}
+
+.mensagem a:hover {
+    color: yellow;
+}
+
+.error {
+    background: crimson;
+    color: yellow;
+
+}
+
+.success {
+    background: rgb(77, 220, 20);
+    color: black;
+}
+
+.info {
+    background: purple;
+    color: white;
+}
+
+.debug {
+    background: purple;
+    color: white;
+}
+
+.warning {
+    background: yellow;
+    color: black;
+}
+
+/* Cadastro */
 
 .cadastro{
     display: flex;

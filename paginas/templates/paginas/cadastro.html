@@ -34,6 +34,7 @@
                 <form method="POST" action="{% url 'cadastro' %}">
                     {% csrf_token %}
                     <legend>Crie uma conta agora mesmo!<br>é rapido e fácil</legend>
+                    {% include 'parciais/_mensagens.html' %}
                     <div class="grupo-formulario-nome">
                         <div class="grupo-formulario">
                             <label for="primeiro-nome">Nome</label>
