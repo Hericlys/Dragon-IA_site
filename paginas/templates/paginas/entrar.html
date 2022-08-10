@@ -1,41 +1,61 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block 'titulo' %}Base titulo{% endblock %}
+{% block 'titulo' %}Entrar{% endblock %}
 {% block 'nav-li' %}
-    <li><a href=" {% url 'cadastro' %}">Cadastre-se</a></li>
-    <li><a href="#">Sobre</a></li>
+    {% if not user.is_authenticated %}
+        <li><a href=" {% url 'cadastro' %}">Cadastre-se</a></li>
+        <li><a href="#">Sobre</a></li>
+    {% else %}
+        <li><a href="{% url 'perfil' %}">Perfil</a></li>
+        <li><a href="#">Download</a></li>
+        <li><a href="{% url 'sair' %}">Sair</a></li>
+    {% endif %}
 {% endblock%}
 
     
 
 {% block 'conteudo'%}
-    <section class="entrar pagina-inteira bg-black">
-        <div class="conteudo-principal">
-            <div class="logo-marcar">
-                <div class="container-img">
-                    <img src="{% static 'img/dragon-icon.svg'%}" alt=" logo marca: dragão preto olhando para a esqueda com o fundo vermelho">
+    {% if not user.is_authenticated %}
+        <section class="entrar pagina-inteira bg-black">
+            <div class="conteudo-principal">
+                <div class="logo-marcar">
+                    <div class="container-img">
+                        <img src="{% static 'img/dragon-icon.svg'%}" alt=" logo marca: dragão preto olhando para a esqueda com o fundo vermelho">
+                    </div>
+                    <h2 class="text-logo">DRAGON IA</h2>
                 </div>
-                <h2 class="text-logo">DRAGON IA</h2>
+                <form class="form-login" method="POST" action="{% url 'entrar' %}">
+                    {% csrf_token %}
+                    <legend>Digite suas credenciais para entrar</legend>
+                    {% include 'parciais/_mensagens.html'%}
+                    <div class="form-login-inputs">
+                        <label for="user-name">Nome de usuario</label>
+                        <input type="text" name="username" id="user-name" value="{{ request.POST.username }}" placeholder="nome_sobrenome">
+                    </div>
+                    <div class="form-login-inputs">
+                        <label for="senha">Senha</label>
+                        <input type="password" name="senha" id="senha" placeholder="digite sua senha">
+                    </div>
+                    <div class="form-login-button">
+                        <button type="submit">Entrar</button>
+                    </div>
+                    <p><a href="{% url 'cadastro' %}">Quero criar minha conta</a></p>
+                    <p><a href="#">Esqueci minha senha</a></p>
+                </form>
             </div>
-            <form class="form-login" method="POST" action="{% url 'entrar' %}">
-                {% csrf_token %}
-                <legend>Digite suas credenciais para entrar</legend>
-                {% include 'parciais/_mensagens.html'%}
-                <div class="form-login-inputs">
-                    <label for="user-name">Nome de usuario</label>
-                    <input type="text" name="username" id="user-name" value="{{ request.POST.username }}" placeholder="nome_sobrenome">
+        </section>
+    {% else %}
+        <section class="entrar pagina-inteira bg-black">
+            <div class="conteudo-principal">
+                <div class="logo-marcar">
+                    <div class="container-img">
+                        <img src="{% static 'img/dragon-icon.svg'%}" alt=" logo marca: dragão preto olhando para a esqueda com o fundo vermelho">
+                    </div>
+                    <h2 class="text-logo">DRAGON IA</h2>
                 </div>
-                <div class="form-login-inputs">
-                    <label for="senha">Senha</label>
-                    <input type="password" name="senha" id="senha" placeholder="digite sua senha">
-                </div>
-                <div class="form-login-button">
-                    <button type="submit">Entrar</button>
-                </div>
-                <p><a href="{% url 'cadastro' %}">Quero criar minha conta</a></p>
-                <p><a href="#">Esqueci minha senha</a></p>
-            </form>
-        </div>
-    </section>
+                <p class="text-aviso">Olá {{user}}, Você já está logado. clique <a href="{% url 'perfil' %}">Aqui</a> para ir para seu perfil.</p>
+            </div>
+        </section>
+    {% endif %}
 {% endblock %}

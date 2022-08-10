@@ -1,80 +1,102 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block 'titulo' %}Base titulo{% endblock %}
+{% block 'titulo' %}Cadastro{% endblock %}
 {% block 'nav-li' %}
-    <li><a href="{% url 'entrar' %}">Entrar</a></li>
-    <li><a href="#">Sobre</a></li>
+    {% if not user.is_authenticated %}
+        <li><a href="{% url 'entrar' %}">Entrar</a></li>
+        <li><a href="#">Sobre</a></li>
+    {% else %}
+        <li><a href="{% url 'perfil' %}">Perfil</a></li>
+        <li><a href="#">Download</a></li>
+        <li><a href="{% url 'sair' %}">Sair</a></li>
+    {% endif %}
 {% endblock%}
 
 {% block 'conteudo'%}
-    <section id="cadastro" class="pagina-inteira bg-black">
-       <div class="cadastro conteudo-principal">
-            <div class="cadastro-conteudo">
-                <h2>DRAGON IA</h2>
-                <div class="cadastro-conteudo-func">
-                    <img src="{% static 'img/verified-symbol-icon.svg' %}">
-                    <p>Inteligencia artificial estratégica.</p>
+    {% if not user.is_authenticated %}
+        <section class="pagina-inteira bg-black">
+           <div class="cadastro conteudo-principal">
+                <div class="cadastro-conteudo">
+                    <h2>DRAGON IA</h2>
+                    <div class="cadastro-conteudo-func">
+                        <img src="{% static 'img/verified-symbol-icon.svg' %}">
+                        <p>Inteligencia artificial estratégica.</p>
+                    </div>
+                    <div class="cadastro-conteudo-func">
+                        <img src="{% static 'img/verified-symbol-icon.svg' %}">
+                        <p>Analise em tempo real</p>
+                    </div>
+                    <div class="cadastro-conteudo-func">
+                        <img src="{% static 'img/verified-symbol-icon.svg' %}">
+                        <p>Controle de gerenciamento.</p>
+                    </div>
+                    <div class="cadastro-conteudo-func">
+                        <img src="{% static 'img/verified-symbol-icon.svg' %}">
+                        <p>Simples e prático.</p>
+                    </div>
+                    <p class="cadastro-p">Transforme o mercado de opções binarias em <a>renda passiva</a><br>Não perca mais tempo e <a>junte-se agora!</a> aos<br> trades mais lucrativos do mercado.</p>
                 </div>
-                <div class="cadastro-conteudo-func">
-                    <img src="{% static 'img/verified-symbol-icon.svg' %}">
-                    <p>Analise em tempo real</p>
+                <div class="cadastro-formulario">
+                    <form method="POST" action="{% url 'cadastro' %}">
+                            {% csrf_token %}
+                        <legend>Crie uma conta agora mesmo!<br>é rapido e fácil</legend>
+                        {% include 'parciais/_mensagens.html' %}
+                        <div class="grupo-formulario-nome">
+                            <div class="grupo-formulario">
+                                <label for="primeiro-nome">Nome</label>
+                                <input type="text" id="primeiro-nome" name="nome" value="{{request.POST.nome}}" placeholder="Ex.: Maria">
+                            </div>
+                            <div class="grupo-formulario">
+                                <label for="segundo-nome">Sobrenome</label>
+                                <input type="text" id="segundo-nome" name="sobrenome" value="{{request.POST.sobrenome}}" placeholder="Ex.: Luiza">
+                            </div>
+                        </div>
+                        <div class="grupo-formulario-login">
+                            <div class="grupo-formulario">
+                                <label for="username">Nome de usuario</label>
+                                <input type="text" id="username" name="username" value="{{request.POST.username}}" placeholder="Crie um nome de usuario">
+                            </div>
+                            <div class="grupo-formulario">
+                                <label for="email">E-mail</label>
+                                <input type="email" id="email" name="email" value="{{request.POST.email}}" placeholder="Seu@email.com">
+                            </div>
+                            <div class="grupo-formulario">
+                                <label for="senha">Senha</label>
+                                <input type="password" id="senha" name="senha" placeholder="Digite sua senha">
+                            </div>
+                            <div class="grupo-formulario">
+                                <label for="conf-senha">Confirme sua senha</label>
+                                <input type="password" id="conf-senha" name="senha2" placeholder="Digite sua senha novamente">
+                            </div>
+                            <div class="grupo-formulario">
+                                <label for="chave">Chave</label>
+                                <input type="text" id="chave" name="chave" value="{{request.POST.chave}}" placeholder="Chave da licença">
+                            </div>
+                        </div>
+                        <div class="grupo-formulario-botao">
+                            <div class="grupo-formulario largura-maxima">
+                                <button class='cadastrar' type="submit">Cadastrar</button>
+                            </div>
+                        </div>
+                        <div>
+                            <p class="j-conta">Já tenho uma conta: <a href="{% url 'entrar' %}">Entrar</a></p>
+                        </div>
+                    </form>
                 </div>
-                <div class="cadastro-conteudo-func">
-                    <img src="{% static 'img/verified-symbol-icon.svg' %}">
-                    <p>Controle de gerenciamento.</p>
-                </div>
-                <div class="cadastro-conteudo-func">
-                    <img src="{% static 'img/verified-symbol-icon.svg' %}">
-                    <p>Simples e prático.</p>
-                </div>
-                <p class="cadastro-p">Transforme o mercado de opções binarias em <a>renda passiva</a><br>Não perca mais tempo e <a>junte-se agora!</a> aos<br> trades mais lucrativos do mercado.</p>
             </div>
-            <div class="cadastro-formulario">
-                <form method="POST" action="{% url 'cadastro' %}">
-                        {% csrf_token %}
-                    <legend>Crie uma conta agora mesmo!<br>é rapido e fácil</legend>
-                    {% include 'parciais/_mensagens.html' %}
-                    <div class="grupo-formulario-nome">
-                        <div class="grupo-formulario">
-                            <label for="primeiro-nome">Nome</label>
-                            <input type="text" id="primeiro-nome" name="nome" value="{{request.POST.nome}}" placeholder="Ex.: Maria">
-                        </div>
-                        <div class="grupo-formulario">
-                            <label for="segundo-nome">Sobrenome</label>
-                            <input type="text" id="segundo-nome" name="sobrenome" value="{{request.POST.sobrenome}}" placeholder="Ex.: Luiza">
-                        </div>
+        </section>
+    {% else %}
+        <section class="entrar pagina-inteira bg-black">
+            <div class="conteudo-principal">
+                <div class="logo-marcar">
+                    <div class="container-img">
+                        <img src="{% static 'img/dragon-icon.svg'%}" alt=" logo marca: dragão preto olhando para a esqueda com o fundo vermelho">
                     </div>
-                    <div class="grupo-formulario-login">
-                        <div class="grupo-formulario">
-                            <label for="email">E-mail</label>
-                            <input type="email" id="email" name="email" value="{{request.POST.email}}" placeholder="Seu@email.com">
-                        </div>
-                        <div class="grupo-formulario">
-                            <label for="senha">Senha</label>
-                            <input type="password" id="senha" name="senha" placeholder="Digite sua senha">
-                        </div>
-                        <div class="grupo-formulario">
-                            <label for="conf-senha">Confirme sua senha</label>
-                            <input type="password" id="conf-senha" name="senha2" placeholder="Digite sua senha novamente">
-                        </div>
-                        <div class="grupo-formulario">
-                            <label for="chave">Chave</label>
-                            <input type="text" id="chave" name="chave" value="{{request.POST.chave}}" placeholder="Chave da licença">
-                        </div>
-                    </div>
-                    <div class="grupo-formulario-botao">
-                        <div class="grupo-formulario largura-maxima">
-                            <button class='cadastrar' type="submit">Cadastrar</button>
-                        </div>
-                    </div>
-                    <div>
-                        <p class="j-conta">Já tenho uma conta: <a href="{% url 'entrar' %}">Entrar</a></p>
-                    </div>
-
-                </form>
-
+                    <h2 class="text-logo">DRAGON IA</h2>
+                </div>
+                <p class="text-aviso">Olá {{ user.first_name }} {{ user.last_name }}, Você já está logado. clique <a href="{% url 'perfil' %}">Aqui</a> para ir para seu perfil.</p>
             </div>
-        </div>
-    </section>
+        </section>
+    {% endif %}
 {% endblock%}

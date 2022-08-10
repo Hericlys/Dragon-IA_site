@@ -393,6 +393,21 @@ p {
     color: crimson;
 }
 
+/* pagina fechada */
+
+.conteudo-principal .text-aviso {
+    margin-top: 5rem;
+    text-align: center;
+}
+
+.conteudo-principal .text-aviso a {
+    color: #1F6CAB;
+}
+
+.conteudo-principal .text-aviso a:hover {
+    color: crimson;
+}
+
 @media (max-width: 80rem) {
 
     .menu {

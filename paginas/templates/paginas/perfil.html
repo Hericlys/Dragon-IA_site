@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block 'titulo' %}Base titulo{% endblock %}
+{% block 'titulo' %}Perfil{% endblock %}
 {% block 'nav-li' %}
     <li><a href="#">Download</a></li>
-    <li><a href="#">Sair</a></li>
+    <li><a href="{% url 'sair' %}">Sair</a></li>
 {% endblock%}
 
 {% block 'conteudo'%}

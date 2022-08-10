@@ -15,7 +15,7 @@ def cadastro(request):
 
     nome = request.POST.get('nome')
     sobrenome = request.POST.get('sobrenome')
-    username = nome + '_' + sobrenome
+    username = request.POST.get('username')
     email = request.POST.get('email')
     senha = request.POST.get('senha')
     senha2 = request.POST.get('senha2')
@@ -77,3 +77,9 @@ def entrar(request):
 @login_required(redirect_field_name='login')
 def perfil(request):
     return render(request, 'paginas/perfil.html')
+
+
+@login_required(redirect_field_name='login')
+def sair(request):
+    auth.logout(request)
+    return redirect('entrar')
