@@ -3,6 +3,7 @@ from django.contrib import messages, auth
 from django.core.validators import validate_email
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from .models import Chave
 
 
 def home(request):
@@ -45,8 +46,19 @@ def cadastro(request):
         return render(request, 'paginas/cadastro.html')
 
     if User.objects.filter(username=username).exists():
-        messages.add_message(request, messages.ERROR, 'Já temos um usuario cadastrado com esse nome e sobrenome')
+        messages.add_message(request, messages.ERROR, 'Nome de usuario indisponível')
         return render(request, 'paginas/cadastro.html')
+
+    if not Chave.objects.filter(chave=chave).exists():
+        messages.add_message(request, messages.INFO, 'Chave inexistente')
+        return render(request, 'paginas/cadastro.html')
+
+    if Chave.objects.filter(chave=chave).exists():
+        usuarios = User.objects.all()
+        for usuario in usuarios:
+            if Chave.objects.filter(usuario=usuario).exists():
+                messages.add_message(request, messages.INFO, 'Chave inexistente')
+                return render(request, 'paginas/cadastro.html')
 
     messages.add_message(request, messages.SUCCESS, 'Registrado com sucesso. Agora entre na sua conta')
     user = User.objects.create_user(username=username, email=email,
