@@ -2,7 +2,7 @@
     {% for mensagem in messages %}
         {% if mensagem.tags == "info" %}
             <div class=" mensagem {{ mensagem.tags }}">
-                <p> ops... sua licença não é valida. <a href="#">clique aqui! para obter uma nova licença.</a></p>
+                <p> {{ mensagem }} <a href="#">clique aqui!</a> para obter uma nova licença.</p>
             </div>
         {% else %}
             <div class=" mensagem {{ mensagem.tags }}">

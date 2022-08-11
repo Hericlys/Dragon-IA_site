@@ -3,6 +3,8 @@ from django.contrib import messages, auth
 from django.core.validators import validate_email
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.utils import timezone
+from datetime import timedelta
 from .models import Chave
 
 
@@ -52,19 +54,34 @@ def cadastro(request):
     if not Chave.objects.filter(chave=chave).exists():
         messages.add_message(request, messages.INFO, 'Chave inexistente')
         return render(request, 'paginas/cadastro.html')
-
-    if Chave.objects.filter(chave=chave).exists():
+    else:
         usuarios = User.objects.all()
         for usuario in usuarios:
-            if Chave.objects.filter(usuario=usuario).exists():
-                messages.add_message(request, messages.INFO, 'Chave inexistente')
+            if Chave.objects.filter(chave=chave, usuario=usuario).exists() and str(usuario) != "Hericlysdesa":
+                messages.add_message(request, messages.INFO, f'Outro usuario já Cadastrou essa chave')
                 return render(request, 'paginas/cadastro.html')
 
-    messages.add_message(request, messages.SUCCESS, 'Registrado com sucesso. Agora entre na sua conta')
+    key = Chave.objects.get(chave=chave)
+
+
     user = User.objects.create_user(username=username, email=email,
                                     password=senha, first_name=nome,
                                     last_name=sobrenome)
+
+    id_usuario = User.objects.get(username=username)
+    ativacao = timezone.now()
+    expiracao = ativacao + timedelta(days=30)
+    creat_chave = Chave(
+        id=key.id,
+        usuario=id_usuario,
+        chave=chave,
+        data_criacao=ativacao,
+        data_expiracao=expiracao,
+    )
+
+    creat_chave.save()
     user.save()
+    messages.add_message(request, messages.SUCCESS, f'Cadastro criado com sucesso, agora entre em sua conta')
     return redirect('entrar')
 
 
