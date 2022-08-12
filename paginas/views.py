@@ -9,7 +9,7 @@ from .models import Chave
 
 
 def home(request):
-    pass
+    return render(request, 'paginas/home.html')
 
 
 def cadastro(request):
@@ -36,9 +36,11 @@ def cadastro(request):
         return render(request, 'paginas/cadastro.html')
 
     if len(senha) < 8:
-        messages.add_message(request, messages.WARNING, 'a senha precisa ter 8 caracteres ou mais')
+        messages.add_message(request, messages.WARNING, 'A senha precisa ter 8 caracteres ou mais')
         return render(request, 'paginas/cadastro.html')
-
+    if len(username) < 6:
+        messages.add_message(request, messages.WARNING, 'O nome de usuario precisa ter 6 caracteres ou mais')
+        return render(request, 'paginas/cadastro.html')
     if senha != senha2:
         messages.add_message(request, messages.ERROR, 'As senhas são diferentes.')
         return render(request, 'paginas/cadastro.html')
@@ -57,12 +59,11 @@ def cadastro(request):
     else:
         usuarios = User.objects.all()
         for usuario in usuarios:
-            if Chave.objects.filter(chave=chave, usuario=usuario).exists() and str(usuario) != "Hericlysdesa":
+            if Chave.objects.filter(chave=chave, usuario=usuario).exists() and usuario != None:
                 messages.add_message(request, messages.INFO, f'Outro usuario já Cadastrou essa chave')
                 return render(request, 'paginas/cadastro.html')
 
     key = Chave.objects.get(chave=chave)
-
 
     user = User.objects.create_user(username=username, email=email,
                                     password=senha, first_name=nome,
