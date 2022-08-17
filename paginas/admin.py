@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Chave
+from .models import Chave, Paridades
 
 
 class ChaveAdmin(admin.ModelAdmin):
@@ -22,4 +22,25 @@ class ChaveAdmin(admin.ModelAdmin):
     ]
 
 
+class ParidadesAdmin(admin.ModelAdmin):
+    list_display = (
+        'id',
+        'paridade',
+        'payout',
+        'put',
+        'call',
+    )
+
+    list_display_links = (
+        'paridade',
+        'payout',
+    )
+
+    search_fields = [
+        'paridade',
+        'payout',
+    ]
+
+
 admin.site.register(Chave, ChaveAdmin)
+admin.site.register(Paridades, ParidadesAdmin)

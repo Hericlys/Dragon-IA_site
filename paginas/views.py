@@ -5,7 +5,11 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from datetime import timedelta
-from .models import Chave
+from .models import Chave, Paridades
+from rest_framework.decorators import api_view
+from .serializers import ParidadesSerializer
+from rest_framework.response import Response
+from rest_framework import status
 
 
 def home(request):
@@ -113,3 +117,18 @@ def perfil(request):
 def sair(request):
     auth.logout(request)
     return redirect('entrar')
+
+
+@api_view(['GET', 'POST'])
+def paridades_list(request):
+    if request.method == "GET":
+        paridades = Paridades.objects.all()
+        serializer = ParidadesSerializer(paridades, many=True)
+        return Response(serializer.data)
+    elif request.method == "POST":
+        serializer = ParidadesSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.erros, status=status.HTTP_400_BAD_REQUEST)
+

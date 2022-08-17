@@ -9,4 +9,5 @@ urlpatterns = [
     path('accounts/login/', views.entrar, name='login'),
     path('perfil/', views.perfil, name='perfil'),
     path('sair/', views.sair, name='sair'),
+    path('api/', views.paridades_list, name='paridades_list'),
 ]
