@@ -127,8 +127,17 @@ def paridades_list(request):
         return Response(serializer.data)
     elif request.method == "POST":
         serializer = ParidadesSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        r_paridade = request.data
+        print(r_paridade)
+        try:
+            paridade = Paridades.objects.get(paridade=r_paridade['paridade'])
+        except:
+            return Response(serializer.erros, status=status.HTTP_400_BAD_REQUEST)
+        if paridade:
+            """
+            Fazer a catalogação da paridade
+            """
+            serializer = ParidadesSerializer(paridade)
+            return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.erros, status=status.HTTP_400_BAD_REQUEST)
 
