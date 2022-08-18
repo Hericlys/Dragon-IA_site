@@ -10,4 +10,5 @@ urlpatterns = [
     path('perfil/', views.perfil, name='perfil'),
     path('sair/', views.sair, name='sair'),
     path('api/', views.paridades_list, name='paridades_list'),
+    path('api/atualizar', views.atualizar_paridade, name='atualizar_paridade'),
 ]

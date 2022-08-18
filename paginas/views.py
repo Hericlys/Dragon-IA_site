@@ -126,18 +126,42 @@ def paridades_list(request):
         serializer = ParidadesSerializer(paridades, many=True)
         return Response(serializer.data)
     elif request.method == "POST":
-        serializer = ParidadesSerializer(data=request.data)
-        r_paridade = request.data
-        print(r_paridade)
+        post = request.data
         try:
-            paridade = Paridades.objects.get(paridade=r_paridade['paridade'])
-        except:
-            return Response(serializer.erros, status=status.HTTP_400_BAD_REQUEST)
-        if paridade:
-            """
-            Fazer a catalogação da paridade
-            """
-            serializer = ParidadesSerializer(paridade)
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        return Response(serializer.erros, status=status.HTTP_400_BAD_REQUEST)
+            if post['paridade']:
+                paridades = Paridades.objects.all()
+                for paridade in paridades:
+                    if paridade.paridade == post['paridade']:
+                        par = Paridades.objects.get(paridade=post['paridade'])
+                        serializer = ParidadesSerializer(par)
+                        return Response(serializer.data, status=status.HTTP_200_OK)
+                print('valor errado de paridade')
+                return Response(status=status.HTTP_400_BAD_REQUEST)
+        except KeyError:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
 
+
+@api_view(["POST"])
+def atualizar_paridade(request):
+    if request.method == "GET":
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+    elif request.method == "POST":
+        post = request.data
+        try:
+            if post['paridade']:
+                paridades = Paridades.objects.all()
+                for paridade in paridades:
+                    if paridade.paridade == post['paridade']:
+                        par = Paridades.objects.get(paridade=post['paridade'])
+                        obj = Paridades(
+                            id=par.id,
+                            call=None,
+                            put=None,
+                            analise=True
+                        )
+                        obj.save()
+                        return Response(status=status.HTTP_200_OK)
+                print('valor errado de paridade')
+                return Response(status=status.HTTP_400_BAD_REQUEST)
+        except KeyError:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
