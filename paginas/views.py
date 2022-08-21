@@ -119,24 +119,25 @@ def sair(request):
     return redirect('entrar')
 
 
-@api_view(['GET', 'POST'])
+@api_view(['POST'])
 def paridades_list(request):
-    if request.method == "GET":
-        paridades = Paridades.objects.all()
-        serializer = ParidadesSerializer(paridades, many=True)
-        return Response(serializer.data)
-    elif request.method == "POST":
+    if request.method == "POST":
         post = request.data
         try:
-            if post['paridade']:
-                paridades = Paridades.objects.all()
-                for paridade in paridades:
-                    if paridade.paridade == post['paridade']:
-                        par = Paridades.objects.get(paridade=post['paridade'])
-                        serializer = ParidadesSerializer(par)
-                        return Response(serializer.data, status=status.HTTP_200_OK)
-                print('valor errado de paridade')
-                return Response(status=status.HTTP_400_BAD_REQUEST)
+            usuario = post['username']
+            senha = post['senha']
+            user = auth.authenticate(request, username=usuario, password=senha)
+            if not user:
+                return Response(status=status.HTTP_401_UNAUTHORIZED)
+            else:
+                if post['paridade']:
+                    paridades = Paridades.objects.all()
+                    for paridade in paridades:
+                        if paridade.paridade == post['paridade']:
+                            par = Paridades.objects.get(paridade=post['paridade'])
+                            serializer = ParidadesSerializer(par)
+                            return Response(serializer.data, status=status.HTTP_200_OK)
+                    return Response(status=status.HTTP_404_NOT_FOUND)
         except KeyError:
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
@@ -151,19 +152,28 @@ def atualizar_paridade(request):
             payout = post["payout"]
             call = post["call"]
             put = post["put"]
+            usuario = post['username']
+            senha = post['senha']
         except KeyError:
             return Response(status=status.HTTP_400_BAD_REQUEST)
-        paridades = Paridades.objects.all()
-        for c in paridades:     # Verificando a paridade
-            if c.paridade == paridade:
-                par = Paridades.objects.get(paridade=paridade)
-                atualizacao = Paridades(
-                    id=par.id,
-                    paridade=paridade,
-                    analise=analise,
-                    payout=payout,
-                    call=call,
-                    put=put
-                )
-                atualizacao.save()
-                return Response(status=status.HTTP_200_OK)
+        user = auth.authenticate(request, username=usuario, password=senha)
+        if not user:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
+        else:
+            if user.is_superuser:
+                paridades = Paridades.objects.all()
+                for c in paridades:     # Verificando a paridade
+                    if c.paridade == paridade:
+                        par = Paridades.objects.get(paridade=paridade)
+                        atualizacao = Paridades(
+                            id=par.id,
+                            paridade=paridade,
+                            analise=analise,
+                            payout=payout,
+                            call=call,
+                            put=put
+                        )
+                        atualizacao.save()
+                        return Response(status=status.HTTP_200_OK)
+            else:
+                return Response(status=status.HTTP_401_UNAUTHORIZED)
