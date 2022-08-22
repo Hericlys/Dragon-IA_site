@@ -175,3 +175,21 @@ def atualizar_paridade(request):
                         return Response(status=status.HTTP_200_OK)
             else:
                 return Response(status=status.HTTP_401_UNAUTHORIZED)
+
+
+@api_view(["POST"])
+def user(request):
+    if request.method == "POST":
+        post = request.data
+        try:
+            usuario = post['username']
+            senha = post['senha']
+
+            user = auth.authenticate(request, username=usuario, password=senha)
+            if not user:
+                return Response(status=status.HTTP_404_NOT_FOUND)
+            else:
+                if user.is_active:
+                    return Response(status=status.HTTP_200_OK)
+        except KeyError:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
