@@ -18,8 +18,7 @@ class Chave(models.Model):
 
 
 class Paridades(models.Model):
-    paridade = models.CharField(max_length=7)
-    call = models.CharField(max_length=10, blank=True, null=True)
-    put = models.CharField(max_length=10, blank=True, null=True)
-    payout = models.IntegerField()
-    analise = models.BooleanField(default=False)
+    paridade = models.CharField(max_length=10)
+    call = models.CharField(max_length=255, blank=True, null=True)
+    put = models.CharField(max_length=255, blank=True, null=True)
+    payout = models.IntegerField(default=0)

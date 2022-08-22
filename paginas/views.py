@@ -148,7 +148,6 @@ def atualizar_paridade(request):
         post = request.data     # pegando as informações
         try:    # Verificando e separando as informações
             paridade = post["paridade"]
-            analise = post["analise"]
             payout = post["payout"]
             call = post["call"]
             put = post["put"]
@@ -168,7 +167,6 @@ def atualizar_paridade(request):
                         atualizacao = Paridades(
                             id=par.id,
                             paridade=paridade,
-                            analise=analise,
                             payout=payout,
                             call=call,
                             put=put
