@@ -136,12 +136,16 @@ def paridades_list(request):
             else:
                 if post['paridade']:
                     paridades = Paridades.objects.all()
-                    for paridade in paridades:
-                        if paridade.paridade == post['paridade']:
-                            par = Paridades.objects.get(paridade=post['paridade'])
-                            serializer = ParidadesSerializer(par)
-                            return Response(serializer.data, status=status.HTTP_200_OK)
-                    return Response(status=status.HTTP_404_NOT_FOUND)
+                    if user.is_superuser and post['paridade'] == "todas":
+                        serializer = ParidadesSerializer(paridades, many=True)
+                        return Response(serializer.data, status=status.HTTP_200_OK)
+                    else:
+                        for paridade in paridades:
+                            if paridade.paridade == post['paridade']:
+                                par = Paridades.objects.get(paridade=post['paridade'])
+                                serializer = ParidadesSerializer(par)
+                                return Response(serializer.data, status=status.HTTP_200_OK)
+                        return Response(status=status.HTTP_404_NOT_FOUND)
         except KeyError:
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
