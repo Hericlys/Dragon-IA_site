@@ -119,6 +119,10 @@ def sair(request):
     return redirect('entrar')
 
 
+@login_required(redirect_field_name='login')
+def download(request):
+    return render(request, 'paginas/download.html')
+
 @api_view(['POST'])
 def paridades_list(request):
     if request.method == "POST":
@@ -148,7 +152,6 @@ def atualizar_paridade(request):
         post = request.data     # pegando as informações
         try:    # Verificando e separando as informações
             paridade = post["paridade"]
-            payout = post["payout"]
             call = post["call"]
             put = post["put"]
             usuario = post['username']
@@ -167,7 +170,6 @@ def atualizar_paridade(request):
                         atualizacao = Paridades(
                             id=par.id,
                             paridade=paridade,
-                            payout=payout,
                             call=call,
                             put=put
                         )

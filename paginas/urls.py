@@ -8,6 +8,7 @@ urlpatterns = [
     path('entrar/', views.entrar, name='entrar'),
     path('accounts/login/', views.entrar, name='login'),
     path('perfil/', views.perfil, name='perfil'),
+    path('download/', views.download, name='download'),
     path('sair/', views.sair, name='sair'),
     path('api/', views.paridades_list, name='paridades_list'),
     path('api/atualizar', views.atualizar_paridade, name='atualizar_paridade'),

@@ -26,19 +26,16 @@ class ParidadesAdmin(admin.ModelAdmin):
     list_display = (
         'id',
         'paridade',
-        'payout',
         'put',
         'call',
     )
 
     list_display_links = (
         'paridade',
-        'payout',
     )
 
     search_fields = [
         'paridade',
-        'payout',
     ]
 
 

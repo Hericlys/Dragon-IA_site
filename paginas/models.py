@@ -21,4 +21,3 @@ class Paridades(models.Model):
     paridade = models.CharField(max_length=10)
     call = models.CharField(max_length=255, blank=True, null=True)
     put = models.CharField(max_length=255, blank=True, null=True)
-    payout = models.IntegerField(default=0)

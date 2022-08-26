@@ -3,11 +3,18 @@
 
 {% block 'titulo' %}Perfil{% endblock %}
 {% block 'nav-li' %}
-    <li><a href="#">Download</a></li>
+    <li><a href="{% url 'download' %}">Download</a></li>
     <li><a href="{% url 'sair' %}">Sair</a></li>
 {% endblock%}
 
 {% block 'conteudo'%}
-    <h2>Sou o perfil</h2>
-    {% include 'parciais/_mensagens.html'%}
+    <section class="pagina-inteira bg-black">
+        <div class="conteudo-principal perfil">
+            <div class="desenvolvimento">
+                <h1>Em desenvolvimento</h1>
+                <h2>- pagina Perfil -</h2>
+                <p><a href="{% url 'download' %}">Clique aqui</a> para ir para a pagina de download</p>
+            </div>
+        </div>
+    </section>>
 {% endblock %}

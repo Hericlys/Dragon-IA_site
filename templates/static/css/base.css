@@ -408,6 +408,19 @@ p {
     color: crimson;
 }
 
+/* desenvolvimento */
+
+.desenvolvimento {
+    text-align: center;
+}
+
+.desenvolvimento a {
+    color: #1F6CAB;
+}
+
+.desenvolvimento a:hover {
+    color: crimson;
+}
 @media (max-width: 80rem) {
 
     .menu {

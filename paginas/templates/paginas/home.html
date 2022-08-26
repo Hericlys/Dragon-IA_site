@@ -4,20 +4,29 @@
 {% block 'titulo' %}Perfil{% endblock %}
 {% block 'nav-li' %}
     {% if not user.is_authenticated %}
-        <li><a href="#">Ref-01</a></li>
-        <li><a href="#">Ref-02</a></li>
         <li><a href=" {% url 'cadastro' %}">Cadastre-se</a></li>
         <li><a href="{% url 'entrar' %}">Entrar</a></li>
     {% else %}
-        <li><a href="#">Ref-01</a></li>
-        <li><a href="#">Ref-02</a></li>
         <li><a href="{% url 'perfil' %}">Perfil</a></li>
-        <li><a href="#">Download</a></li>
+        <li><a href="{% url 'download' %}">Download</a></li>
         <li><a href="{% url 'sair' %}">Sair</a></li>
     {% endif %}
 {% endblock%}
-
+{% include 'parciais/_mensagens.html'%}
 {% block 'conteudo'%}
-    <h2>sou a home</h2>
-    {% include 'parciais/_mensagens.html'%}
+    <section class="pagina-inteira bg-black">
+        <div class="conteudo-principal home">
+            <div class="desenvolvimento">
+                {% if not user.is_authenticated %}
+                    <h1>Em desenvolvimento</h1>
+                    <h2>- pagina Home -</h2>
+                    <p><a href="{% url 'entrar' %}">Clique aqui</a> para entrar na sua conta</p>
+                {% else %}
+                    <h1>Em desenvolvimento</h1>
+                    <h2>- pagina Home -</h2>
+                    <p><a href="{% url 'download' %}">Clique aqui</a> para baixar o bot</p>
+                {% endif%}
+            </div>
+        </div>
+    </section>>
 {% endblock %}

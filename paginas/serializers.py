@@ -9,5 +9,4 @@ class ParidadesSerializer(serializers.ModelSerializer):
             'paridade',
             'call',
             'put',
-            'payout',
         ]
