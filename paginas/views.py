@@ -240,12 +240,12 @@ def criar_chave(request):
             return Response(status=status.HTTP_404_NOT_FOUND)
         user = auth.authenticate(request, username=usuario, password=senha)
         if not user:
-            return Response(status=status.HTTP_401_UNAUTHORIZED)
+            return Response(status=status.HTTP_404_NOT_FOUND)
         else:
             if user.is_superuser:
                 chaves = Chave.objects.all()
                 for key in chaves:
-                    if key['chave'] == chave:
+                    if key.chave == chave:
                         return Response(status=status.HTTP_304_NOT_MODIFIED)
                 new = Chave(
                     chave=chave,
@@ -274,8 +274,7 @@ def verificar_chave(request):
                 livres = []
                 chaves = Chave.objects.all()
                 for chave in chaves:
-
-                    if not chave['usuario']: # modificar verificação
+                    if not chave.usuario:
                         livres.append(chave)
                 serializer = ChaveSerializer(livres, many=True)
                 return Response(serializer.data, status=status.HTTP_200_OK)
