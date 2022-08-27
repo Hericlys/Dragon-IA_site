@@ -7,7 +7,7 @@ from django.utils import timezone
 from datetime import timedelta
 from .models import Chave, Paridades
 from rest_framework.decorators import api_view
-from .serializers import ParidadesSerializer
+from .serializers import ParidadesSerializer, ChaveSerializer
 from rest_framework.response import Response
 from rest_framework import status
 
@@ -123,6 +123,7 @@ def sair(request):
 def download(request):
     return render(request, 'paginas/download.html')
 
+
 @api_view(['POST'])
 def paridades_list(request):
     if request.method == "POST":
@@ -145,9 +146,9 @@ def paridades_list(request):
                                 par = Paridades.objects.get(paridade=post['paridade'])
                                 serializer = ParidadesSerializer(par)
                                 return Response(serializer.data, status=status.HTTP_200_OK)
-                        return Response(status=status.HTTP_404_NOT_FOUND)
+                        return Response(status=status.HTTP_401_UNAUTHORIZED)
         except KeyError:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
+            return Response(status=status.HTTP_404_NOT_FOUND)
 
 
 @api_view(["POST"])
@@ -184,7 +185,33 @@ def atualizar_paridade(request):
 
 
 @api_view(["POST"])
-def user(request):
+def criar_paridade(request):
+    if request.method == "POST":
+        post = request.data
+        try:
+            paridade = post["paridade"]
+            call = post["call"]
+            put = post["put"]
+            usuario = post['username']
+            senha = post['senha']
+        except KeyError:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        user = auth.authenticate(request, username=usuario, password=senha)
+        if not user:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
+        else:
+            if user.is_superuser:
+                new = Paridades(
+                    paridade=paridade,
+                    call=call,
+                    put=put
+                )
+                new.save()
+                return Response(status=status.HTTP_201_CREATED)
+
+
+@api_view(["POST"])
+def verificar_usuarios(request):
     if request.method == "POST":
         post = request.data
         try:
@@ -193,9 +220,64 @@ def user(request):
 
             user = auth.authenticate(request, username=usuario, password=senha)
             if not user:
-                return Response(status=status.HTTP_404_NOT_FOUND)
+                return Response(status=status.HTTP_401_UNAUTHORIZED)
             else:
                 if user.is_active:
                     return Response(status=status.HTTP_200_OK)
         except KeyError:
             return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(["POST"])
+def criar_chave(request):
+    if request.method == "POST":
+        post = request.data
+        try:
+            chave = post["chave"]
+            usuario = post['username']
+            senha = post['senha']
+        except KeyError:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        user = auth.authenticate(request, username=usuario, password=senha)
+        if not user:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
+        else:
+            if user.is_superuser:
+                chaves = Chave.objects.all()
+                for key in chaves:
+                    if key['chave'] == chave:
+                        return Response(status=status.HTTP_304_NOT_MODIFIED)
+                new = Chave(
+                    chave=chave,
+                    usuario=None,
+                )
+                new.save()
+                return Response(status=status.HTTP_201_CREATED)
+            else:
+                return Response(status=status.HTTP_401_UNAUTHORIZED)
+
+
+@api_view(["POST"])
+def verificar_chave(request):
+    if request.method == "POST":
+        post = request.data
+        try:
+            usuario = post['username']
+            senha = post['senha']
+        except KeyError:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        user = auth.authenticate(request, username=usuario, password=senha)
+        if not user:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        else:
+            if user.is_superuser:
+                livres = []
+                chaves = Chave.objects.all()
+                for chave in chaves:
+
+                    if not chave['usuario']: # modificar verificação
+                        livres.append(chave)
+                serializer = ChaveSerializer(livres, many=True)
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            else:
+                return Response(status=status.HTTP_401_UNAUTHORIZED)

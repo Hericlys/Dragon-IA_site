@@ -12,7 +12,7 @@
         <li><a href="{% url 'sair' %}">Sair</a></li>
     {% endif %}
 {% endblock%}
-{% include 'parciais/_mensagens.html'%}
+
 {% block 'conteudo'%}
     <section class="pagina-inteira bg-black">
         <div class="conteudo-principal home">
@@ -26,6 +26,7 @@
                     <h2>- pagina Home -</h2>
                     <p><a href="{% url 'download' %}">Clique aqui</a> para baixar o bot</p>
                 {% endif%}
+                {% include 'parciais/_mensagens.html'%}
             </div>
         </div>
     </section>>

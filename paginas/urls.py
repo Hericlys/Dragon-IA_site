@@ -10,7 +10,10 @@ urlpatterns = [
     path('perfil/', views.perfil, name='perfil'),
     path('download/', views.download, name='download'),
     path('sair/', views.sair, name='sair'),
-    path('api/', views.paridades_list, name='paridades_list'),
-    path('api/atualizar', views.atualizar_paridade, name='atualizar_paridade'),
-    path('api/user', views.user, name='user'),
+    path('api/paridade/', views.paridades_list, name='paridades_list'),
+    path('api/paridade/criar', views.criar_paridade, name='criar_paridade'),
+    path('api/paridade/atualizar', views.atualizar_paridade, name='atualizar_paridade'),
+    path('api/usuarios/verificar', views.verificar_usuarios, name='user'),
+    path('api/chaves/criar', views.criar_chave, name='criar_chave'),
+    path('api/chaves/verificar', views.verificar_chave, name='verificar_chave'),
 ]
