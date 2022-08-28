@@ -1,3 +1,5 @@
+import datetime
+
 from django.shortcuts import render, redirect
 from django.contrib import messages, auth
 from django.core.validators import validate_email
@@ -96,9 +98,18 @@ def entrar(request):
 
     usuario = request.POST.get('username')
     senha = request.POST.get('senha')
+    try:
+        ver_usuario = User.objects.get(username=usuario)
+    except:
+        messages.add_message(request, messages.ERROR, 'Credenciais inválidas')
+        messages.add_message(request, messages.WARNING, 'Tanto o usuario como a senha diferencia letras minusculas de maiusculas')
+        return render(request, 'paginas/entrar.html')
 
     user = auth.authenticate(request, username=usuario, password=senha)
     if not user:
+        if not ver_usuario.is_active:
+            messages.add_message(request, messages.ERROR, 'Chave expirada! contate o suporte')
+            return render(request, 'paginas/entrar.html')
         messages.add_message(request, messages.ERROR, 'Credenciais inválidas')
         messages.add_message(request, messages.WARNING, 'Tanto o usuario como a senha diferencia letras minusculas de maiusculas')
         return render(request, 'paginas/entrar.html')
@@ -226,6 +237,29 @@ def verificar_usuarios(request):
                     return Response(status=status.HTTP_200_OK)
         except KeyError:
             return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET'])
+def bloquear_user(request):
+    now = timezone.now()
+    if request.method == "GET":
+        chaves = Chave.objects.all()
+        for chave in chaves:
+            if chave.data_expiracao <= now:
+                user = User.objects.get(username=chave.usuario.username)
+                desativar = User(
+                    id=user.id,
+                    username=user.username,
+                    email=user.email,
+                    password=user.password,
+                    first_name=user.first_name,
+                    last_name=user.last_name,
+                    is_active=False
+                )
+                desativar.save()
+            return Response(status=status.HTTP_200_OK)
+    else:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(["POST"])
