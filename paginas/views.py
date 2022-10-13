@@ -141,9 +141,8 @@ def paridades_list(request):
         post = request.data
         try:
             usuario = post['username']
-            senha = post['senha']
-            user = auth.authenticate(request, username=usuario, password=senha)
-            if not user:
+            user = User.objects.get(username=usuario)
+            if not user.is_active:
                 return Response(status=status.HTTP_401_UNAUTHORIZED)
             else:
                 if post['paridade']:
@@ -158,7 +157,7 @@ def paridades_list(request):
                                 serializer = ParidadesSerializer(par)
                                 return Response(serializer.data, status=status.HTTP_200_OK)
                         return Response(status=status.HTTP_401_UNAUTHORIZED)
-        except KeyError:
+        except Exception as e:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
 
