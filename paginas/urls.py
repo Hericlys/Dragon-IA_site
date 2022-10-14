@@ -11,7 +11,6 @@ urlpatterns = [
     path('download/', views.download, name='download'),
     path('sair/', views.sair, name='sair'),
     path('api/paridade/', views.paridades_list, name='paridades_list'),
-    path('api/paridade/criar/', views.criar_paridade, name='criar_paridade'),
     path('api/paridade/atualizar/', views.atualizar_paridade, name='atualizar_paridade'),
     path('api/usuarios/verificar/', views.verificar_usuarios, name='user'),
     path('api/usuarios/bloquear/', views.bloquear_user, name='user_bloquear'),

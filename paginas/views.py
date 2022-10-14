@@ -170,55 +170,33 @@ def atualizar_paridade(request):
             call = post["call"]
             put = post["put"]
             usuario = post['username']
-            senha = post['senha']
         except KeyError:
             return Response(status=status.HTTP_400_BAD_REQUEST)
-        user = auth.authenticate(request, username=usuario, password=senha)
-        if not user:
+        user = User.objects.get(username=usuario)
+        if not user.is_superuser:
             return Response(status=status.HTTP_401_UNAUTHORIZED)
         else:
-            if user.is_superuser:
-                paridades = Paridades.objects.all()
-                for c in paridades:     # Verificando a paridade
-                    if c.paridade == paridade:
-                        par = Paridades.objects.get(paridade=paridade)
-                        atualizacao = Paridades(
-                            id=par.id,
-                            paridade=paridade,
-                            call=call,
-                            put=put
-                        )
-                        atualizacao.save()
-                        return Response(status=status.HTTP_200_OK)
-            else:
-                return Response(status=status.HTTP_401_UNAUTHORIZED)
-
-
-@api_view(["POST"])
-def criar_paridade(request):
-    if request.method == "POST":
-        post = request.data
-        try:
-            paridade = post["paridade"]
-            call = post["call"]
-            put = post["put"]
-            usuario = post['username']
-            senha = post['senha']
-        except KeyError:
-            return Response(status=status.HTTP_404_NOT_FOUND)
-        user = auth.authenticate(request, username=usuario, password=senha)
-        if not user:
-            return Response(status=status.HTTP_401_UNAUTHORIZED)
-        else:
-            if user.is_superuser:
-                new = Paridades(
-                    paridade=paridade,
-                    call=call,
-                    put=put
-                )
-                new.save()
-                return Response(status=status.HTTP_201_CREATED)
-
+            paridades = Paridades.objects.all()
+            for c in paridades:
+                if c.paridade == paridade:
+                    par = Paridades.objects.get(paridade=paridade)
+                    atualizacao = Paridades(
+                        id=par.id,
+                        paridade=paridade,
+                        call=call,
+                        put=put
+                    )
+                    atualizacao.save()
+                    return Response(status=status.HTTP_200_OK)
+                
+            new = Paridades(
+                paridade=paridade,
+                call=call,
+                put=put
+            )
+            new.save()
+            return Response(status=status.HTTP_201_CREATED)
+        
 
 @api_view(["POST"])
 def verificar_usuarios(request):
@@ -226,15 +204,18 @@ def verificar_usuarios(request):
         post = request.data
         try:
             usuario = post['username']
+            n_user = User.objects.get(username=usuario)
+            if not n_user.is_active:
+                return Response(status=status.HTTP_401_UNAUTHORIZED)
             senha = post['senha']
-
+            
             user = auth.authenticate(request, username=usuario, password=senha)
             if not user:
-                return Response(status=status.HTTP_401_UNAUTHORIZED)
+                return Response(status=status.HTTP_404_NOT_FOUND)
             else:
-                if user.is_active:
-                    return Response(status=status.HTTP_200_OK)
-        except KeyError:
+                return Response(status=status.HTTP_200_OK)
+            
+        except Exception as e:
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
