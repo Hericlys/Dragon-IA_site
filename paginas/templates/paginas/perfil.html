@@ -10,12 +10,36 @@
 {% block 'conteudo'%}
     <section class="pagina-inteira bg-black">
         <div class="conteudo-principal perfil">
-            <div class="desenvolvimento">
-                <h1>Em desenvolvimento</h1>
-                <h2>- pagina Perfil -</h2>
-                <p><a href="{% url 'download' %}">Clique aqui</a> para ir para a pagina de download</p>
-                {% include 'parciais/_mensagens.html'%}
+            <div class="container-info-perfil">
+                <div class="logo">
+                    <div class="container-img">
+                        <img src="{% static 'img/dragon-icon.svg'%}" alt=" logo marca: dragão preto olhando para a esqueda com o fundo vermelho">
+                    </div>
+                    <div class="container-text">
+                        <h2 class="text-logo">{{ user.first_name }} {{ user.last_name }}</h2>
+                        <p>status: ativo</p>
+                    </div>
+                </div>
             </div>
+                <table class="table">
+      <thead>
+        <tr>
+          <th>Paridade</th>
+          <th>valor de compra</th>
+          <th>valor de venda</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for sinal in sinais %}
+          <tr>
+            <td>{{ sinal.paridade }}</td>
+            <td>{{ sinal.call }}</td>
+            <td>{{ sinal.put }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
         </div>
     </section>>
 {% endblock %}

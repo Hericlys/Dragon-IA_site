@@ -115,13 +115,16 @@ def entrar(request):
         return render(request, 'paginas/entrar.html')
     else:
         auth.login(request, user)
-        messages.add_message(request, messages.SUCCESS, f'Bem vindo! {usuario}')
+        messages.add_message(request, messages.SUCCESS, f'Bem vindo! {user.first_name} { user.last_name }')
         return redirect('perfil')
 
 
 @login_required(redirect_field_name='login')
 def perfil(request):
-    return render(request, 'paginas/perfil.html')
+    sinais = Paridades.objects.all()
+    return render(request, 'paginas/perfil.html', {
+        'sinais': sinais
+    })
 
 
 @login_required(redirect_field_name='login')

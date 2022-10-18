@@ -220,16 +220,19 @@ p {
 
 .cadastro-p a {
     background-color: crimson;
-    color: black;
+    border-radius: 1rem;
+    color: #b2ff9e;
+    padding: 0.1rem;
+    font-size:1.6rem;
 }
 
 .cadastro-formulario form {
-    margin-top: 5rem;
+    margin-top: 0;
     border: none;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 3rem;
+    gap: 0;
 }
 
 .cadastro-formulario legend {
@@ -269,6 +272,7 @@ p {
 }
 
 .grupo-formulario button {
+    margin-top: 2rem;
     border-radius: 15rem;
     width: 10rem;
     height: 3rem;
@@ -407,6 +411,44 @@ p {
 .conteudo-principal .text-aviso a:hover {
     color: crimson;
 }
+
+/* perfil/sinais */
+
+.logo {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo .container-text {
+    display: flex;
+    flex-direction: column;
+    margin-left: 1.5rem;
+}
+
+.logo .container-text h2 {
+    font-size: 2.5rem;
+    margin: 0;
+}
+
+.table {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 5rem;
+  border-top: 0.5rem solid white;
+  padding: 3rem;
+  gap: 5rem;
+}
+
+.table tr {
+    table-layout: fixed;
+    text-align: left;
+    display: flex;
+    gap: 20rem;
+}
+
 
 /* desenvolvimento */
 
