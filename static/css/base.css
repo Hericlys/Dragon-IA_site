@@ -1,0 +1,549 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 62.5%;
+}
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 2rem;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Montserrat', sans-serif;
+}
+
+h1 {
+    font-size: 6rem;
+    text-transform: uppercase;
+}
+
+h2 {
+    font-size: 5.5rem;
+    margin-bottom: 5rem;
+}
+
+h3 {
+    font-size: 5rem;
+}
+
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+p {
+    margin-bottom: 3rem;
+}
+
+.bg-black {
+    background: black;
+    color: white;
+}
+
+.pagina-inteira {
+    min-height: 100vh;
+}
+
+.conteudo-principal {
+    max-width: 120rem;
+    margin: 0 auto;
+    padding: 5rem 3rem;
+}
+
+.menu {
+    background: crimson;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    border-bottom: 0.5rem solid white;
+}
+
+.menu-conteudo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.menu .menu-logo{
+    display: flex;
+    align-items: center;
+}
+
+.menu .menu-logo h1{
+    font-size: 2rem;
+}
+.menu .logo-dg {
+    height: 3rem;
+    width: 3rem;
+    margin-right: 1rem;
+}
+
+.menu ul {
+    list-style: none;
+    display: flex;
+}
+
+.menu ul li a {
+    color: inherit;
+    display: block;
+    padding: 1rem;
+    font-size: 1.5rem;
+    position: relative;
+}
+
+.menu ul li a::after {
+    content: '';
+    position: absolute;
+    bottom: 5%;
+    left: 50%;
+    width: 0%;
+    height: 0.2rem;
+    background: white;
+    transition: all 300ms ease-in-out;
+}
+
+.menu ul li a:hover::after {
+    left: 15%;
+    width: 70%;
+    bottom: 15%;
+}
+
+.espaco-menu {
+    height: 4.5rem;
+}
+
+.fechar-menu {
+    position: absolute;
+    top: -1rem;
+}
+
+/* mensagens */
+
+.mensagem {
+    min-width: 100%;
+    height: auto;
+    border-radius: 1.5rem;
+}
+
+.mensagem p {
+    margin: 0;
+    text-align: center;
+    font-size: 1.4rem;
+    padding: 1rem;
+}
+
+.mensagem a {
+    color: black;
+}
+
+.mensagem a:hover {
+    color: yellow;
+}
+
+.error {
+    background: crimson;
+    color: yellow;
+
+}
+
+.success {
+    background: rgb(77, 220, 20);
+    color: black;
+}
+
+.info {
+    background: purple;
+    color: white;
+}
+
+.debug {
+    background: purple;
+    color: white;
+}
+
+.warning {
+    background: yellow;
+    color: black;
+}
+
+/* Cadastro */
+
+.cadastro{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.cadastro-formulario {
+    max-width: 25%;
+}
+
+.cadastro .cadastro-conteudo h2 {
+    margin-top: 0;
+    margin-bottom: 5rem;
+    font-size: 6rem;
+}
+
+
+.cadastro .cadastro-conteudo-func {
+    display: flex;
+}
+
+.cadastro .cadastro-conteudo-func img, .cadastro-espaco-img{
+    height: 3rem;
+    width: 3rem;
+    margin: 0.5rem;
+    margin-left: 3rem;
+}
+
+.cadastro .cadastro-conteudo-func p {
+    margin: 0.5rem;
+    margin-left: 3rem;
+    padding: 0;
+
+}
+.cadastro-p {
+    text-align: center;
+    margin-top: 5rem;
+}
+
+.cadastro-p a {
+    background-color: crimson;
+    border-radius: 1rem;
+    color: #b2ff9e;
+    padding: 0.1rem;
+    font-size:1.6rem;
+}
+
+.cadastro-formulario form {
+    margin-top: 0;
+    border: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+}
+
+.cadastro-formulario legend {
+    margin: 0;
+    text-align: center;
+}
+
+.grupo-formulario label {
+    font-size: 1.4rem;
+    align-items: center;
+}
+
+.grupo-formulario-nome{
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+
+}
+
+.grupo-formulario input {
+    border: none;
+    background: #eee;
+    padding: 1rem 1rem;
+    border-radius: 15rem;
+    width: 100%;
+}
+
+.grupo-formulario-login{
+    display: flex;
+    flex-direction: column;
+    min-width: 100%;
+    gap: 1rem;
+}
+
+.largura-maxima {
+    width: 100%;
+}
+
+.grupo-formulario button {
+    margin-top: 2rem;
+    border-radius: 15rem;
+    width: 10rem;
+    height: 3rem;
+}
+
+.grupo-formulario .cadastrar {
+    background: #1F6CAB;
+    color: white;
+}
+
+.grupo-formulario button:hover {
+    box-shadow: 0 0 1.5rem crimson ;
+}
+
+.grupo-formulario input:focus, .grupo-formulario textarea:focus {
+    box-shadow: 0 0 1.5rem crimson ;
+}
+
+.j-conta {
+    margin-top: 0;
+    font-size: 1.2rem;
+}
+.j-conta a {
+    text-decoration: none;
+    color: #1F6CAB;
+}
+.j-conta a:hover {
+    color: crimson;
+}
+
+
+/* entrar */
+
+.entrar div .logo-marcar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+}
+
+.container-img {
+    width: 10rem;
+    height: 10rerm;
+    background: crimson;
+    border: 0.5rem solid white;
+    border-radius: 1.5rem;
+}
+
+.container-img img {
+    padding: 1rem;
+    margin-top: 0.5rem;
+}
+.logo-marcar h2 {
+    margin: 0;
+}
+
+.form-login {
+    margin-top: 5rem;
+    max-width: 50%;
+    margin-left: 25%;
+}
+
+.form-login legend {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.form-login-inputs {
+    max-width: 50%;
+    margin-left: 25%;
+}
+
+.form-login-inputs label {
+    display: block;
+    font-size: 1.4rem;
+    margin-top: 3rem;
+    margin-bottom: 0.5rem;
+}
+
+.form-login-inputs input {
+    border: none;
+    background: #eee;
+    padding: 1rem 1rem;
+    border-radius: 15rem;
+    width: 100%;
+}
+
+.form-login-inputs input:focus {
+    box-shadow: 0 0 1.5rem crimson;
+}
+
+.form-login-button {
+    width: 20%;
+    margin-left: 40%;
+    margin-top: 3rem;
+}
+
+.form-login-button button {
+    width: 100%;
+    padding: 0.5rem 0.5rem;
+    border-radius: 1.5rem;
+    background: #1F6CAB;
+    color: white;
+}
+
+.form-login-button button:hover {
+    box-shadow: 0 0 1.5rem crimson;
+}
+
+.form-login p {
+    text-align: center;
+    font-size: 1.4rem;
+    margin: 0;
+    margin-top: 1rem;
+}
+
+.form-login p a {
+    color: #1F6CAB;
+}
+
+.form-login p a:hover {
+    color: crimson;
+}
+
+/* pagina fechada */
+
+.conteudo-principal .text-aviso {
+    margin-top: 5rem;
+    text-align: center;
+}
+
+.conteudo-principal .text-aviso a {
+    color: #1F6CAB;
+}
+
+.conteudo-principal .text-aviso a:hover {
+    color: crimson;
+}
+
+/* perfil/sinais */
+
+.logo {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo .container-text {
+    display: flex;
+    flex-direction: column;
+    margin-left: 1.5rem;
+}
+
+.logo .container-text h2 {
+    font-size: 2.5rem;
+    margin: 0;
+}
+
+.table {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 5rem;
+  border-top: 0.5rem solid white;
+  padding: 3rem;
+  gap: 5rem;
+}
+
+.table tr {
+    table-layout: fixed;
+    text-align: left;
+    display: flex;
+    gap: 20rem;
+}
+
+
+/* desenvolvimento */
+
+.desenvolvimento {
+    text-align: center;
+}
+
+.desenvolvimento a {
+    color: #1F6CAB;
+}
+
+.desenvolvimento a:hover {
+    color: crimson;
+}
+@media (max-width: 80rem) {
+
+    .menu {
+        bottom: 0;
+    }
+
+    .menu-conteudo, .menu-conteudo ul {
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .menu-conteudo {
+        height: 100vh;
+    }
+
+    .menu {
+        display: none;
+    }
+
+    .fechar-menu {
+        display: none;
+    }
+
+    .fechar-menu-label::after {
+        content: '≡';
+        position: fixed;
+        z-index: 2;
+        top: 1rem;
+        right: 2rem;
+        font-size: 3rem;
+        line-height: 3rem;
+        width: 3rem;
+        height: 3rem;
+        text-align: center;
+        background: black;
+        color: white;
+    }
+
+    .fechar-menu:checked~.menu {
+        display: block;
+        text-align: center;
+
+    }
+
+    .fechar-menu:checked~.fechar-menu-label::after {
+        content: '×';
+    }
+
+    .espaco-menu {
+        height: 0;
+    }
+
+    .menu ul li a:hover::after {
+        bottom: 15%;
+    }
+
+    .cadastro {
+        flex-direction: column;
+    }
+
+    .cadastro-formulario {
+        min-width: 80%;
+    }
+
+    .cadastro .cadastro-conteudo h2 {
+        text-align: center;
+        font-size: 5rem;
+    }
+
+    .entrar div .logo-marcar {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .form-login, .form-login-inputs {
+        margin: 0;
+        min-width: 100%;
+    }
+
+    .form-login-button {
+        margin-left: 25%;
+        min-width: 50%;
+    }
+}
